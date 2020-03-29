@@ -16,5 +16,5 @@ setup(
     install_requires=[
         'opencv-python>= 4.2.0'
     ],
-    url="https://github.com/YnsOzt"
+    url="https://github.com/YnsOzt/Image_Dataset_Builder"
 )
