@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name='idb',
-    version='1.0.0',
+    name='ImgDatasetBuilder',
+    version='1.0.1',
     description='Build an image dataset with your webcam',
     py_modules=["DatasetBuilder"],
     package_dir={'': 'src'},

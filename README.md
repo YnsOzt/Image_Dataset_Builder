@@ -1,5 +1,10 @@
 # Image Dataset Builder
-This package allows to use your webcam to create a dataset using your webcam.
+This package allows you to create a dataset using your webcam.
+
+## Installation
+```
+pip install ImgDatasetBuilder
+```
 
 ## usage
 ```
