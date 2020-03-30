@@ -2,7 +2,7 @@ import cv2
 import time
 import copy
 import os
-import sys
+import uuid
 
 
 class DatasetBuilder:
@@ -20,21 +20,22 @@ class DatasetBuilder:
                         - you can specify that you don't want a specific dataset by placing -1 at the correct position
         """
         print("Building the folder structures : ")
-        if os.path.exists(self.out_dir):
-            sys.exit('The out_dir that you specified already exists')
+        if not os.path.exists(self.out_dir):
+            os.makedirs(self.out_dir)
         print(self.out_dir)
-        os.makedirs(self.out_dir)
 
         for i in range(len(nb_item)):
             if nb_item[i] != -1:
                 dataset_name = "Train" if i == 0 else "Test" if i == 1 else "Val"
                 dataset_dir = os.path.join(self.out_dir, dataset_name)
-                os.makedirs(dataset_dir)
+                if not os.path.exists(dataset_dir):
+                    os.makedirs(dataset_dir)
                 print("  --> {}".format(dataset_name))
                 for c in self.classes:
                     print("    - {}".format(c))
                     current_dir = os.path.join(dataset_dir, c)
-                    os.makedirs(current_dir)
+                    if not os.path.exists(current_dir):
+                        os.makedirs(current_dir)
 
     def build(self, nb_item=(300, 100, 50), image_width=800, image_height=600):
         """
@@ -71,7 +72,7 @@ class DatasetBuilder:
                 start_time = time.time()
 
             if not start_capture:
-                text = "Class : "+ self.classes[class_position] + " (Press 's' to start recording)"
+                text = "Class : " + self.classes[class_position] + " (Press 's' to start recording)"
                 cv2.putText(frame, text, (0, 25), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255),
                             thickness=2)
             else:
@@ -84,7 +85,7 @@ class DatasetBuilder:
                         cv2.putText(frame, text, (0, 25), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255),
                                     thickness=2)
 
-                        filename = "{}_{}.jpg".format(self.classes[class_position], nb_current_class)
+                        filename = "{}_{}.jpg".format(self.classes[class_position], str(uuid.uuid4()))
                         file_path = os.path.join(self.out_dir, dataset_name, self.classes[class_position], filename)
                         cv2.imwrite(file_path, clean_frame)
 
